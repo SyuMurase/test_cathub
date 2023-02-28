@@ -1,29 +1,25 @@
-import 'package:bottom_nav/NavButtom.dart';
-import 'package:bottom_nav/ProposalPage.dart';
-import 'package:bottom_nav/SearchList.dart';
+import 'package:bottom_nav/model/shared_prefarence.dart';
 import 'package:bottom_nav/model/top_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'firebase/user_fanction.dart';
 import 'firebase_options.dart';
+
 
 // void main() {
 //   runApp(MyApp());
 // }
-// void main() async {
-//   WidgetsFlutterBinding.ensureInitialized();
-//   await Firebase.initializeApp(
-//     options: DefaultFirebaseOptions.currentPlatform,
-//   );
-//   await UserFirebasestore.createUser();
-//   runApp(MyApp());
-// }
-void main(){
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // await Firebase.initializeApp(
-  //   options: DefaultFirebaseOptions.currentPlatform,
-  // );
-  // await UserFirebasestore.createUser();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  // await UserFirestore.fetchUsers(
+  await SharedPreferences.getInstance();
+  String? uid = SharedPrefs.fetchUid();
+  final myUid = await UserFirestore.createUser();
   runApp(MyApp());
 }
 
@@ -37,42 +33,28 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: SearchApp(),
+      home: UserList(),
       debugShowCheckedModeBanner: false,
     );
   }
 }
 
-class UserFirebasestore {
-  static final FirebaseFirestore _firebaseFirestoreInstore =
-      FirebaseFirestore.instance;
-  static final _userCollection = _firebaseFirestoreInstore.collection('user');
+// class UserFirebasestore {
+//   static final FirebaseFirestore _firebaseFirestoreInstore =
+//       FirebaseFirestore.instance;
+//   static final _userCollection = _firebaseFirestoreInstore.collection('user');
 
-  static Future<void> createUser() async {
-    try {
-      // users という collection へのリファレンスを user_ref という変数に代入している
-      // final users_ref = FirebaseFirestore.instance.collection('users');
-      _userCollection.add({
-        'name': 'い',
-        'imagepath' : 'path'
-      });
-      print('アカウント作成');
-    } catch (e) {
-      print('$e');
-    }
-
-    // try {
-    //   await _userCollection.add({
-    //     'name' : '名無し',
-    //   });
-
-    //   print('アカウント作成);
-    //   }
-    //    catch(e) {
-    //   print($e)
-    // }
-  }
-}
+//   static Future<void> createUser() async {
+//     try {
+//       // users という collection へのリファレンスを user_ref という変数に代入している
+//       // final users_ref = FirebaseFirestore.instance.collection('users');
+//       _userCollection.add({'name': 'い', 'imagepath': 'path'});
+//       print('アカウント作成されました');
+//     } catch (e) {
+//       print('$e');
+//     }
+//   }
+// }
 
 class WidgetExample extends StatelessWidget {
   const WidgetExample({Key? key}) : super(key: key);
