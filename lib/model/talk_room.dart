@@ -5,8 +5,8 @@ import 'package:bottom_nav/model/user.dart';
 class TalkRoom {
   String roomId;
   User talkUser;
-  String laseMessage;
+  String? laseMessage;
 
   TalkRoom(
-      {required this.roomId, required this.talkUser, this.laseMessage = ''});
+      {required this.roomId, required this.talkUser, this.laseMessage});
 }

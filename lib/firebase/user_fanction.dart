@@ -59,4 +59,20 @@ class UserFirestore {
       print('$e');
     }
   }
+
+  //第21回でfetchMyprefileをfetchProfileに改変している
+  static Future<User?> fetchProfile(String uid) async {
+    try {
+      // String uid = SharedPrefs.fetchUid()!;
+      final snapshot = await _userCollection.doc(uid).get();
+      User user = User(
+          name: snapshot.data()!['name'],
+          imagePath: snapshot.data()!['imagepath'],
+          uid: uid);
+      return user;
+    } catch (e) {
+      print('$e');
+      return null;
+    }
+  }
 }
